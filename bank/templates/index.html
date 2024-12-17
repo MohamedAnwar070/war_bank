@@ -3,187 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WAR BANK</title>
+    <title>WAR BANK - Secure Banking System</title>
     <style>
-        /* Embedded CSS */
+        /* General Page Style */
         body {
             font-family: Arial, sans-serif;
-            line-height: 1.6;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
+            background: radial-gradient(black ,white , blue);
             color: #333;
         }
-        header {
-            background: #444;
-            color: #fff;
-            padding: 1rem 0;
+
+        h1, h2 {
             text-align: center;
+            color: rgb(240, 155, 140);
         }
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        nav ul li {
-            display: inline;
-            margin-right: 15px;
-        }
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-        }
-        footer {
-            text-align: center;
-            padding: 1rem 0;
-            background: #222;
-            color: #fff;
-        }
-        main {
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
             padding: 20px;
-            text-align: center;
+            background: linear-gradient(125deg, red , black , black);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        form label, form input, form button {
-            display: block;
-            margin: 10px auto;
-            width: 80%;
-            max-width: 300px;
+        .main-menu-col{
+            color: khaki;
         }
-        form input, form button {
+
+        /* Buttons with Hover and Click Animation */
+        .btn {
+            display: inline-block;
+            justify-content: center;
+            width: 100%;
             padding: 10px;
-            font-size: 1rem;
-        }
-        form button {
-            background: #444;
+            margin: 10px 0;
+            background-color: #638399;
             color: #fff;
             border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease-in-out;
             cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #3498db;
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn:active {
+            background-color: #1c6ea4;
+            transform: scale(0.95);
+        }
+
+        /* Input Fields */
+        input[type="text"],
+        input[type="number"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Account Info */
+        .account-info {
+            background-color: #ecf0f1;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* Hidden Sections */
+        .section {
+            width: 96%;
+            display: none;
+        }
+
+        .visible {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to WAR BANK</h1>
-        <nav>
-            <ul>
-                <li><a href="#open-account" onclick="showForm('open-account')">Open Account</a></li>
-                <li><a href="#deposit" onclick="showForm('deposit')">Deposit</a></li>
-                <li><a href="#withdraw" onclick="showForm('withdraw')">Withdraw</a></li>
-                <li><a href="#check-balance" onclick="showForm('check-balance')">Check Balance</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <!-- Open Account Form -->
-        <div id="open-account" class="form-section" style="display: none;">
-            <h2>Open Account</h2>
-            <form id="openAccountForm">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-                <label for="pin">PIN:</label>
-                <input type="password" id="pin" name="pin" required>
-                <label for="deposit">Deposit Amount:</label>
-                <input type="number" id="deposit" name="deposit" required>
-                <button type="button" onclick="openAccount()">Open Account</button>
-            </form>
+    <h1>Welcome to WAR BANK</h1>
+    <div class="container">
+        <!-- Main Menu -->
+        <div id="menu" class="section visible">
+            <h2 class="main-menu-col">Main Menu</h2>
+            <button class="btn" onclick="showSection('openAccount')">Open New Account</button>
+            <button class="btn" onclick="showSection('depositMoney')">Deposit Money</button>
+            <button class="btn" onclick="showSection('withdrawMoney')">Withdraw Money</button>
+            <button class="btn" onclick="showSection('balanceCheck')">Check Balance</button>
         </div>
 
-        <!-- Deposit Form -->
-        <div id="deposit" class="form-section" style="display: none;">
-            <h2>Deposit</h2>
-            <form id="depositForm">
-                <label for="depositPin">PIN:</label>
-                <input type="password" id="depositPin" name="pin" required>
-                <label for="amount">Amount:</label>
-                <input type="number" id="amount" name="amount" required>
-                <button type="button" onclick="depositMoney()">Deposit</button>
-            </form>
+        <!-- Open Account Section -->
+        <div id="openAccount" class="section">
+            <h2>Open a New Account</h2>
+            <input type="text" id="accountName" placeholder="Enter Full Name">
+            <input type="password" id="accountPin" placeholder="Enter a 4-digit Pin">
+            <input type="number" id="initialDeposit" placeholder="Initial Deposit Amount">
+            <button class="btn" onclick="openAccount()">Submit</button>
+            <div class="account-info" id="accountDetails"></div>
+            <button class="btn" onclick="backToMenu()">Back to Menu</button>
         </div>
 
-        <!-- Withdraw Form -->
-        <div id="withdraw" class="form-section" style="display: none;">
-            <h2>Withdraw</h2>
-            <form id="withdrawForm">
-                <label for="withdrawPin">PIN:</label>
-                <input type="password" id="withdrawPin" name="pin" required>
-                <label for="withdrawAmount">Amount:</label>
-                <input type="number" id="withdrawAmount" name="amount" required>
-                <button type="button" onclick="withdrawMoney()">Withdraw</button>
-            </form>
+        <!-- Deposit Money Section -->
+        <div id="depositMoney" class="section">
+            <h2>Deposit Money</h2>
+            <input type="text" id="depositAccount" placeholder="Enter Account Number">
+            <input type="password" id="depositPin" placeholder="Enter Account Pin">
+            <input type="number" id="depositAmount" placeholder="Enter Amount to Deposit">
+            <button class="btn" onclick="depositMoney()">Deposit</button>
+            <div class="account-info" id="depositMessage"></div>
+            <button class="btn" onclick="backToMenu()">Back to Menu</button>
         </div>
 
-        <!-- Check Balance -->
-        <div id="check-balance" class="form-section" style="display: none;">
+        <!-- Withdraw Money Section -->
+        <div id="withdrawMoney" class="section">
+            <h2>Withdraw Money</h2>
+            <input type="text" id="withdrawAccount" placeholder="Enter Account Number">
+            <input type="password" id="withdrawPin" placeholder="Enter Account Pin">
+            <input type="number" id="withdrawAmount" placeholder="Enter Amount to Withdraw">
+            <button class="btn" onclick="withdrawMoney()">Withdraw</button>
+            <div class="account-info" id="withdrawMessage"></div>
+            <button class="btn" onclick="backToMenu()">Back to Menu</button>
+        </div>
+
+        <!-- Balance Check Section -->
+        <div id="balanceCheck" class="section">
             <h2>Check Balance</h2>
-            <form id="balanceForm">
-                <label for="balancePin">PIN:</label>
-                <input type="password" id="balancePin" name="pin" required>
-                <button type="button" onclick="checkBalance()">Check Balance</button>
-            </form>
-            <div id="balanceResult" style="margin-top: 20px;"></div>
+            <input type="text" id="balanceAccount" placeholder="Enter Account Number">
+            <input type="password" id="balancePin" placeholder="Enter Account Pin">
+            <button class="btn" onclick="checkBalance()">Check Balance</button>
+            <div class="account-info" id="balanceMessage"></div>
+            <button class="btn" onclick="backToMenu()">Back to Menu</button>
         </div>
-    </main>
-    <footer>
-        <p>&copy; 2024 WAR BANK</p>
-    </footer>
+    </div>
 
     <script>
-        // Embedded JavaScript
-        const accounts = {};
+        const accounts = {}; // Object to store accounts
 
-        function showForm(formId) {
-            document.querySelectorAll('.form-section').forEach(form => form.style.display = 'none');
-            document.getElementById(formId).style.display = 'block';
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('visible'));
+            document.getElementById(sectionId).classList.add('visible');
+        }
+
+        function backToMenu() {
+            showSection('menu');
+        }
+
+        function generateAccountNumber() {
+            return Math.floor(1000000000000000 + Math.random() * 9000000000000000).toString();
         }
 
         function openAccount() {
-            const name = document.getElementById('name').value;
-            const pin = document.getElementById('pin').value;
-            const deposit = parseFloat(document.getElementById('deposit').value);
-            if (accounts[pin]) {
-                alert('Account with this PIN already exists!');
+            const name = document.getElementById('accountName').value;
+            const pin = document.getElementById('accountPin').value;
+            const deposit = parseFloat(document.getElementById('initialDeposit').value);
+
+            if (name && pin.length === 4 && deposit >= 0) {
+                const accountNumber = generateAccountNumber();
+                accounts[accountNumber] = { name, pin, balance: deposit };
+                document.getElementById('accountDetails').innerText = 
+                    `Account Created!\nAccount Number: ${accountNumber}\nInitial Balance: Rs.${deposit}`;
             } else {
-                accounts[pin] = { name, balance: deposit };
-                alert(`Account created for ${name} with balance Rs.${deposit}`);
-                document.getElementById('openAccountForm').reset();
+                alert("Please fill in all fields correctly. Pin must be 4 digits.");
             }
         }
 
         function depositMoney() {
+            const accNum = document.getElementById('depositAccount').value;
             const pin = document.getElementById('depositPin').value;
-            const amount = parseFloat(document.getElementById('amount').value);
-            if (accounts[pin]) {
-                accounts[pin].balance += amount;
-                alert(`Deposit successful! New balance: Rs.${accounts[pin].balance}`);
-                document.getElementById('depositForm').reset();
+            const amount = parseFloat(document.getElementById('depositAmount').value);
+
+            if (accounts[accNum] && accounts[accNum].pin === pin && amount > 0) {
+                accounts[accNum].balance += amount;
+                document.getElementById('depositMessage').innerText = 
+                    `Deposit Successful!\nNew Balance: Rs.${accounts[accNum].balance}`;
             } else {
-                alert('Invalid PIN!');
+                alert("Invalid account number, pin, or amount.");
             }
         }
 
         function withdrawMoney() {
+            const accNum = document.getElementById('withdrawAccount').value;
             const pin = document.getElementById('withdrawPin').value;
             const amount = parseFloat(document.getElementById('withdrawAmount').value);
-            if (accounts[pin]) {
-                if (accounts[pin].balance >= amount) {
-                    accounts[pin].balance -= amount;
-                    alert(`Withdrawal successful! New balance: Rs.${accounts[pin].balance}`);
-                    document.getElementById('withdrawForm').reset();
-                } else {
-                    alert('Insufficient funds!');
-                }
+
+            if (accounts[accNum] && accounts[accNum].pin === pin && accounts[accNum].balance >= amount) {
+                accounts[accNum].balance -= amount;
+                document.getElementById('withdrawMessage').innerText = 
+                    `Withdrawal Successful!\nNew Balance: Rs.${accounts[accNum].balance}`;
             } else {
-                alert('Invalid PIN!');
+                alert("Invalid account number, pin, or insufficient funds.");
             }
         }
 
         function checkBalance() {
+            const accNum = document.getElementById('balanceAccount').value;
             const pin = document.getElementById('balancePin').value;
-            if (accounts[pin]) {
-                document.getElementById('balanceResult').innerText = `Balance: Rs.${accounts[pin].balance}`;
-                document.getElementById('balanceForm').reset();
+
+            if (accounts[accNum] && accounts[accNum].pin === pin) {
+                document.getElementById('balanceMessage').innerText = 
+                    `Account Balance: Rs.${accounts[accNum].balance}`;
             } else {
-                alert('Invalid PIN!');
+                alert("Invalid account number or pin.");
             }
         }
     </script>
