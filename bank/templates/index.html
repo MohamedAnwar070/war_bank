@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAR BANK</title>
+    <style>
+        /* Embedded CSS */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background: #444;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem 0;
+            background: #222;
+            color: #fff;
+        }
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+        form label, form input, form button {
+            display: block;
+            margin: 10px auto;
+            width: 80%;
+            max-width: 300px;
+        }
+        form input, form button {
+            padding: 10px;
+            font-size: 1rem;
+        }
+        form button {
+            background: #444;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to WAR BANK</h1>
+        <nav>
+            <ul>
+                <li><a href="#open-account" onclick="showForm('open-account')">Open Account</a></li>
+                <li><a href="#deposit" onclick="showForm('deposit')">Deposit</a></li>
+                <li><a href="#withdraw" onclick="showForm('withdraw')">Withdraw</a></li>
+                <li><a href="#check-balance" onclick="showForm('check-balance')">Check Balance</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <!-- Open Account Form -->
+        <div id="open-account" class="form-section" style="display: none;">
+            <h2>Open Account</h2>
+            <form id="openAccountForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="pin">PIN:</label>
+                <input type="password" id="pin" name="pin" required>
+                <label for="deposit">Deposit Amount:</label>
+                <input type="number" id="deposit" name="deposit" required>
+                <button type="button" onclick="openAccount()">Open Account</button>
+            </form>
+        </div>
+
+        <!-- Deposit Form -->
+        <div id="deposit" class="form-section" style="display: none;">
+            <h2>Deposit</h2>
+            <form id="depositForm">
+                <label for="depositPin">PIN:</label>
+                <input type="password" id="depositPin" name="pin" required>
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" name="amount" required>
+                <button type="button" onclick="depositMoney()">Deposit</button>
+            </form>
+        </div>
+
+        <!-- Withdraw Form -->
+        <div id="withdraw" class="form-section" style="display: none;">
+            <h2>Withdraw</h2>
+            <form id="withdrawForm">
+                <label for="withdrawPin">PIN:</label>
+                <input type="password" id="withdrawPin" name="pin" required>
+                <label for="withdrawAmount">Amount:</label>
+                <input type="number" id="withdrawAmount" name="amount" required>
+                <button type="button" onclick="withdrawMoney()">Withdraw</button>
+            </form>
+        </div>
+
+        <!-- Check Balance -->
+        <div id="check-balance" class="form-section" style="display: none;">
+            <h2>Check Balance</h2>
+            <form id="balanceForm">
+                <label for="balancePin">PIN:</label>
+                <input type="password" id="balancePin" name="pin" required>
+                <button type="button" onclick="checkBalance()">Check Balance</button>
+            </form>
+            <div id="balanceResult" style="margin-top: 20px;"></div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 WAR BANK</p>
+    </footer>
+
+    <script>
+        // Embedded JavaScript
+        const accounts = {};
+
+        function showForm(formId) {
+            document.querySelectorAll('.form-section').forEach(form => form.style.display = 'none');
+            document.getElementById(formId).style.display = 'block';
+        }
+
+        function openAccount() {
+            const name = document.getElementById('name').value;
+            const pin = document.getElementById('pin').value;
+            const deposit = parseFloat(document.getElementById('deposit').value);
+            if (accounts[pin]) {
+                alert('Account with this PIN already exists!');
+            } else {
+                accounts[pin] = { name, balance: deposit };
+                alert(`Account created for ${name} with balance Rs.${deposit}`);
+                document.getElementById('openAccountForm').reset();
+            }
+        }
+
+        function depositMoney() {
+            const pin = document.getElementById('depositPin').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            if (accounts[pin]) {
+                accounts[pin].balance += amount;
+                alert(`Deposit successful! New balance: Rs.${accounts[pin].balance}`);
+                document.getElementById('depositForm').reset();
+            } else {
+                alert('Invalid PIN!');
+            }
+        }
+
+        function withdrawMoney() {
+            const pin = document.getElementById('withdrawPin').value;
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            if (accounts[pin]) {
+                if (accounts[pin].balance >= amount) {
+                    accounts[pin].balance -= amount;
+                    alert(`Withdrawal successful! New balance: Rs.${accounts[pin].balance}`);
+                    document.getElementById('withdrawForm').reset();
+                } else {
+                    alert('Insufficient funds!');
+                }
+            } else {
+                alert('Invalid PIN!');
+            }
+        }
+
+        function checkBalance() {
+            const pin = document.getElementById('balancePin').value;
+            if (accounts[pin]) {
+                document.getElementById('balanceResult').innerText = `Balance: Rs.${accounts[pin].balance}`;
+                document.getElementById('balanceForm').reset();
+            } else {
+                alert('Invalid PIN!');
+            }
+        }
+    </script>
+</body>
+</html>
