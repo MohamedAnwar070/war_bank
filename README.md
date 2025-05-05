@@ -2,6 +2,8 @@
 
 **WAR_BANK** is a simple, secure banking system designed for managing accounts with features like account creation, balance tracking, and PIN-based security.
 
+---
+
 ## 🌟 Features
 
 - **Account Creation**: Create accounts with a name, unique 4-digit PIN, and balance.
@@ -21,7 +23,6 @@ Click the code button to copy the repo URL, then run:
 ```bash
 git clone https://github.com/MohamedAnwar070/war_bank.git
 
----
 
 ## 📬 Contact
 - **Email**: [mohamedanwar.asraf@gmail.com](mailto:mohamedanwar.asraf@gmail.com)
