@@ -20,9 +20,9 @@ Follow these steps to set up and run the project:
 
 Click the code button to copy the repo URL, then run:
 
-```bash
+```
 git clone https://github.com/MohamedAnwar070/war_bank.git
-
+```
 
 ## 📬 Contact
 - **Email**: [mohamedanwar.asraf@gmail.com](mailto:mohamedanwar.asraf@gmail.com)
