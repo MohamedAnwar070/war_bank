@@ -22,7 +22,7 @@ Click the code button to copy the repo URL, then run:
 git clone https://github.com/MohamedAnwar070/war_bank.git
 
 
-### 📧 Contact
+## 📧 Contact
 
 If you have any questions or suggestions, feel free to reach out!
 
